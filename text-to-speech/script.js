@@ -86,8 +86,8 @@ var channelName = "sayStuff";
 
 /*-----Fill in the gaps in the info-----*/
 
-$('#date').append(' '+ d);
-$('#start').append(' '+ h+':'+m+' ' + day);
+$('#date').append('<span> '+ d)+ '</span>';
+$('#start').append('<span> '+ h+':'+m+' ' + day + '</span>');
 
 $('#counter').stopwatch().stopwatch('start');
 
@@ -139,7 +139,7 @@ recognition.onspeechend = function() {
 
 recognition.onerror = function(event) {
   if(event.error == 'no-speech') {
-    // instructions.text('No speech was detected. Try again.');  
+     console.log('No speech was detected. Try again.');  
   };
 }
 
@@ -310,59 +310,181 @@ function wordFrequency(content) {
   /* The Array.prototype.reduce method assists us in producing a single value from an
      array. In this case, we're going to use it to output an object with results. */
   var counts = matchedWords.reduce(function ( stats, word ) {
-
+  var wordList = `a
+  about
+  above
+  after
+  all
+  also
+  and
+  as
+  at
+  be
+  because
+  but
+  by
+  can
+  come
+  could
+  day
+  do
+  even
+  find
+  first
+  for
+  from
+  get
+  give
+  go
+  have
+  he
+  her
+  here
+  him
+  his
+  how
+  I
+  if
+  in
+  into
+  it
+  its
+  just
+  know
+  let
+  like
+  look
+  make
+  man
+  many
+  me
+  more
+  my
+  new
+  no
+  not
+  now
+  of
+  on
+  one
+  only
+  or
+  other
+  our
+  out
+  people
+  say
+  see
+  she
+  so
+  some
+  something
+  somewhere
+  take
+  tell
+  than
+  that
+  the
+  their
+  them
+  then
+  there
+  these
+  they
+  thing
+  think
+  this
+  those
+  time
+  to
+  two
+  up
+  use
+  very
+  want
+  way
+  we
+  well
+  what
+  when
+  which
+  who
+  will
+  with
+  would
+  year
+  you
+  your
+  `;
       /* `stats` is the object that we'll be building up over time.
          `word` is each individual entry in the `matchedWords` array */
       if ( stats.hasOwnProperty( word ) ) {
+        var includes = wordList.includes(word);
+
+        if (includes) {
+        } else {
+          stats[ word ] = stats[ word ] + 1;
+        }
           /* `stats` already has an entry for the current `word`.
              As a result, let's increment the count for that `word`. */
-          stats[ word ] = stats[ word ] + 1;
+          
       } else {
+        var includes = wordList.includes(word);
           /* `stats` does not yet have an entry for the current `word`.
              As a result, let's add a new entry, and set count to 1. */
-        
-          stats[ word ] = 1;
+            if (includes) {
+            } else {
+            stats[ word ] = 1;
+        }
       }
  
       /* Because we are building up `stats` over numerous iterations,
          we need to return it for the next pass to modify it. */
+         console.log(stats);
       return stats;
 
   }, {} );
+
+  var threeWords = getTopThreeWords(counts);
  // sortStats(counts);
-  renderCloud(counts);
+  renderCloud(threeWords);
 
   /* Now that `counts` has our object, we can log it. */
-  function renderCloud(counts) {
+  function renderCloud(threeWords) {
     $('#keywords').children().remove();
-    var sortedWords = [];
-
-    for (var key in counts) {
-     // if (counts.hasOwnProperty(key)) {
-        sortedWords.push([key, counts[key]]);
-     // }
-      sortedWords.sort(function(a, b) {
-        return a[1] + b[1];
-    });
-
-    for (var i = 0; i  < 3; i++) {
-      if (i == 2) {
-        $('#keywords').append('<span>'+ sortedWords[i]+'</span>');
-
+    $('#keywords').append(' </br>');
+    for (var i = 0; i < threeWords.length; i++ ) {
+      // Add just the word to the topThree array
+          $('#keywords').append(' <span class="keyword"><em>'+' '+ threeWords[i]+'</em></span> <br/>');
       }
-
-      $('#keywords').append('<span>'+ sortedWords[i]+', </span>');
     }
-    ;
-
-  }
-  console.log(sortedWords);
 
 }
   
 
+function getTopThreeWords(wordObject) {
+  // create empty array to store sorted key value pairs
+  // need the array to use the js sort method
+  let sorted = [];
 
+  // loop over the word object and put each word and its frequency in the array
+  for (let word in wordObject) {
+    sorted.push([word, wordObject[word]]);
+  }
 
+  // use the js sort function on the array to reorganize the array in descending value
+  sorted.sort(function(a, b) {
+    return b[1] - a[1];
+  });
 
+  // create empty array to hold top three words
+  let topThree = [];
 
+  // short hand loop for doing something 3 times
+  [1,2,3,4,5].forEach(function(i) {
+    // Add just the word to the topThree array
+    topThree.push(sorted[i - 1][0]);
+  });
+
+  return topThree;
 }

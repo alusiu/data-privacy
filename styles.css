@@ -18,10 +18,10 @@ html, body {
 .app-updates {
     width:100%;
 }
-h1, h2, h4, h5  {
+h1, h4, h5  {
     color: #fff;
   }
-p, li, ul{
+h2, p, li, ul{
     color: #333;
 }
 
@@ -57,17 +57,53 @@ li {
   width: 60%;
 }
 
+.section.subscribe {
+    width: 80%;
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+li.strong {
+    font-weight:900;
+}
+.strong > span{
+    font-weight: 200;
+}
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#keywords {
+    display: flex;
+    flex-flow: column;
+    align-content: flex-end;
+    /* align-items: baseline; */
+
+}
+.keyword{
+    font-weight: 200;
+    text-align: right;
+}
 .banner{
     padding: 1em 2em;
     width: auto;
     background-color: #333333;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     align-content: center;
     justify-content: center;
+    text-align: center
 }
+.banner.subscribe {
 
+}
 textarea {
     border: none;
     resize: none;
