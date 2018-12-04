@@ -57,6 +57,33 @@ var channelName = "sayStuff";
       ssl: true  //enables a secure connection. This option has to be used if using the OCAD webspace
     });
 
+    dataServer.history(
+      {
+          channel: 'sayStuff',
+          count: 100, // how many items to fetch
+          stringifiedTimeToken: true, // false is the default
+      },
+      function (status, response) {
+          var msgs = response.messages;
+          var start = response.startTimeToken;
+          var end = response.endTimeToken;
+          // if msgs were retrieved, do something useful with them
+          if (msgs != undefined && msgs.length > 0) {
+              console.log(msgs.length);
+              console.log("start : " + start);
+              console.log("end : " + end);
+          }
+          for (var i = 0; i < msgs.length; i++) {
+            if (msgs[i].entry.messageText != undefined) {
+              overAllNotes += ' '+ msgs[i].entry.messageText;
+            }
+          }
+          wordFrequency(overAllNotes);
+          // renderCloud(overAllNotes);
+
+      }
+    );
+
 /*-----Fill in the gaps in the info-----*/
 
 $('#date').append(' '+ d);
@@ -128,6 +155,7 @@ $('#start-record-btn').on('click', function(e) {
     noteContent += ' ';
   }
   recognition.start();
+  $('#start-record-btn').remove();
 });
 
 
@@ -302,20 +330,39 @@ function wordFrequency(content) {
 
   }, {} );
  // sortStats(counts);
- // renderCloud(counts);
+  renderCloud(counts);
+
   /* Now that `counts` has our object, we can log it. */
-console.log(counts);
   function renderCloud(counts) {
-    $('#word-cloud').children().remove();
+    $('#keywords').children().remove();
+    var sortedWords = [];
+
     for (var key in counts) {
-      if (counts.hasOwnProperty(key)) {
-        if(counts[key] > 1) {
-          $('#word-cloud').append("<span id="+key+">"+key+"</span><br/>");
-          $('#'+key).css("font-size", 15 + counts[key]*2.5 + 'px');
-        }
-        console.log(key + " -> " + counts[key]);
+     // if (counts.hasOwnProperty(key)) {
+        sortedWords.push([key, counts[key]]);
+     // }
+      sortedWords.sort(function(a, b) {
+        return a[1] + b[1];
+    });
+
+    for (var i = 0; i  < 3; i++) {
+      if (i == 2) {
+        $('#keywords').append('<span>'+ sortedWords[i]+'</span>');
+
       }
+
+      $('#keywords').append('<span>'+ sortedWords[i]+', </span>');
+    }
+    ;
+
   }
+  console.log(sortedWords);
+
 }
+  
+
+
+
+
 
 }

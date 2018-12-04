@@ -5,7 +5,7 @@ html, body {
     margin: 0;
     background: #eee;
     font-family: Arial, Helvetica, sans-serif;
-    cursor: pointer; 
+    /* cursor: pointer;  */
 }
 .main {
     display: flex;
@@ -17,7 +17,6 @@ html, body {
 }
 .app-updates {
     width:100%;
-    /* background: pink; */
 }
 h1, h2, h4, h5  {
     color: #fff;
