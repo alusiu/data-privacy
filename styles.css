@@ -1,11 +1,71 @@
-html, body { height: 100%; }
-
-body {
+html, body { 
+    height: 100%;
+    width: 100%; 
+    padding: 0; 
+    margin: 0;
+    background: #eee;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer; 
+}
+.main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
+    align-content: center;
+}
+.app-updates {
+    /* background: pink; */
+}
+h1, h2, h4, h5  {
+    color: #fff;
+  }
+p, li, ul{
+    color: #333;
+}
+
+h1 {
+    font-size: 85px;
+    margin: 5px;
+}
+h2 {
+    margin: 0px 0px 5px 10px;
+}
+h3{
+    color:#333;
+}
+ul {
+    list-style: none;
+}
+li {
+    width: 100%;
+    padding: 0em 5em 0.5em 0em;
+}
+.section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  border-radius: 50px;
+  padding: 1em 2em;
+  margin: 5%;
+  width: 60%;
+}
+
+.banner{
+    padding: 1em 2em;
+    width: auto;
+    background-color: #333333;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
 }
 
 textarea {
@@ -26,4 +86,32 @@ textarea:focus {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
+}
+
+.recording-shape {
+  position: relative;
+  margin-left: 3%;
+  width: 45px;
+  height: 45px;
+  border: none;
+  box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
+  border-radius: 50%;
+  background-color: #fff;
+  border: #e84c3d 12px solid;
+   /* background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/173024/jonathanlarradet_copy.png);  */
+  background-size:cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  /* -webkit-animation: pulse 1.25s infinite cubic-bezier(0.3, 0, 0, 1); */
+  /* -moz-animation: pulse 1.25s infinite cubic-bezier(0.3, 0, 0, 1); */
+  /* -ms-animation: pulse 1.25s infinite cubic-bezier(0.3, 0, 0, 1); */
+  animation: pulse 1.25s infinite cubic-bezier(0.1, 0.7, 1.0, 0.1);
+}
+
+/* .rec{ */
+@-webkit-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);}}
+@-moz-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);}}
+@-ms-keyframes pulse {to {box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);}}
+@keyframes pulse {to {box-shadow: 0 0 0 25px rgba(232, 76, 61, 0);}}
+/* } */
 }
