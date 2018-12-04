@@ -18,9 +18,6 @@ var noteContent = '';
 
 var overAllNotes = '';
 // Get all notes from previous sessions and display them.
-var notes = getAllNotes();
-renderNotes(notes);
-
 var wordCloudVal = '';
  
 // table content stuff 
@@ -30,7 +27,9 @@ var time = new Date(date),
 h = time.getHours(), // 0-24 format
 m = time.getMinutes(),
 day = 'AM';
-
+if (m < 10) {
+  m = '0' + m;
+}
 if (h > 12) {
   h = h - 12;
   day = 'PM';
@@ -98,12 +97,13 @@ $('#counter').stopwatch().stopwatch('start');
 // If false, the recording will stop after a few seconds of silence.
 // When true, the silence period is longer (about 15 seconds),
 // allowing us to keep recording even when the user pauses. 
-recognition.continuous = true;
 
+recognition.continuous = true;
+//console.log(recognition.continuous)
 // This block is called every time the Speech APi captures a line. 
 recognition.onresult = function(event) {
 
-  // event is a SpeechRecognitionEvent object.
+   // event is a SpeechRecognitionEvent object.
   // It holds all the lines we have captured so far. 
   // We only need the current one.
   var current = event.resultIndex;
@@ -112,10 +112,11 @@ recognition.onresult = function(event) {
   var transcript = event.results[current][0].transcript;
   
   overAllNotes += transcript;
+  console.log('in here');
   wordFrequency(overAllNotes);
   sendTheMessage(transcript);
   console.log('T: '+ transcript);
-  console.log('O: '+ overAllNotes);
+  //console.log('O: '+ overAllNotes);
 
 
   // Add the current transcript to the contents of our Note.
@@ -123,10 +124,12 @@ recognition.onresult = function(event) {
   // There is no official solution so far so we have to handle an edge case.
   var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
 
-  /*if(!mobileRepeatBug) {
+  if(!mobileRepeatBug) {
     noteContent += transcript;
     noteTextarea.val(noteContent);
-  }*/
+  }
+  recognition.continuous = true;
+
 };
 
 recognition.onstart = function() { 
@@ -134,7 +137,7 @@ recognition.onstart = function() {
 }
 
 recognition.onspeechend = function() {
-  // instructions.text('You were quiet for a while so voice recognition turned itself off.');
+  console.log('You were quiet for a while so voice recognition turned itself off.');
 }
 
 recognition.onerror = function(event) {
@@ -155,48 +158,14 @@ $('#start-record-btn').on('click', function(e) {
     noteContent += ' ';
   }
   recognition.start();
-  $('#start-record-btn').remove();
+  $('#start-record-btn').css('display', 'hidden');
 });
 
-
-/*$('#pause-record-btn').on('click', function(e) {
-  console.log('pause');
-
-  recognition.stop();
-  // instructions.text('Voice recognition paused.');
-});
-*/
 // Sync the text inside the text area with the noteContent variable.
 
 noteTextarea.on('input', function() {
   noteContent = $(this).val();
 });
-
-$('#save-note-btn').on('click', function(e) {
-  // console.log(noteContent);
-
-  recognition.stop();
-
-  if(!noteContent.length) {
-    // instructions.text('Could not save empty note. Please add a message to your note.');
-  }
-  else {
-    // Save note to localStorage.
-    // The key is the dateTime with seconds, the value is the content of the note.
-    saveNote(new Date().toLocaleString(), noteContent);
-
-    overAllNotes += ' ' + noteContent;
-    // Reset variables and update UI.
-    
-    // console.log(overAllNotes);
-    noteContent = '';
-    // renderNotes(getAllNotes());
-    
-    noteTextarea.val('');
-    // instructions.text('Note saved successfully.');
-  }
-      
-})
 
 notesList.on('click', function(e) {
   e.preventDefault();
@@ -216,21 +185,6 @@ notesList.on('click', function(e) {
   }
 });
 
-/*-----------------------------
-      Speech Synthesis 
-------------------------------*/
-
-function readOutLoud(message) {
-	var speech = new SpeechSynthesisUtterance();
-
-  // Set the text and voice attributes.
-	speech.text = message;
-	speech.volume = 1;
-	speech.rate = 1;
-	speech.pitch = 1;
-  
-	window.speechSynthesis.speak(speech);
-}
 
 /**Publishing text */
 function sendTheMessage(sendText) {
@@ -440,7 +394,7 @@ function wordFrequency(content) {
  
       /* Because we are building up `stats` over numerous iterations,
          we need to return it for the next pass to modify it. */
-         console.log(stats);
+         //console.log(stats);
       return stats;
 
   }, {} );
@@ -451,14 +405,14 @@ function wordFrequency(content) {
 
   /* Now that `counts` has our object, we can log it. */
   function renderCloud(threeWords) {
-    $('#keywords').children().remove();
-    $('#keywords').append(' </br>');
+    $('#keywords-js').children().remove();
+    $('#keywords-js').append(' </br>');
     for (var i = 0; i < threeWords.length; i++ ) {
       // Add just the word to the topThree array
-          $('#keywords').append(' <span class="keyword"><em>'+' '+ threeWords[i]+'</em></span> <br/>');
+          $('#keywords-js').append(' <span class="keywords">'+' '+ threeWords[i]+'</span> <br/>'+ ' ');
       }
     }
-
+    recognition.continuous = true;
 }
   
 
