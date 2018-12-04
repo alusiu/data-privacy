@@ -1,0 +1,29 @@
+html, body { height: 100%; }
+
+body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    width: 50em;
+}
+
+textarea:focus {
+    outline: 0;
+}
+
+#word-cloud {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}

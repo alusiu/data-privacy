@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Voice Controlled Notes App</title>
+        <link rel = "stylesheet"
+        type = "text/css"
+        href = "styles.css" />    
+    </head>
+    <body>
+        <div class="section">
+                
+                <div class="input-single">
+                    <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition." rows="6" readonly></textarea>
+                </div>
+                <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+                <button id="save-note-btn" title="Save Note">Save Note</button>  
+        </div>
+        <!-- <div class="section"> -->
+        
+        <!-- </div> -->
+        <div class="section">
+            <div id="word-cloud"></div>
+        </div>
+    </body>
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.6.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+       
+
+        <script src="text-to-speech/script.js"></script>
+        <!-- <script src="index.js"></script> -->
+</html>
