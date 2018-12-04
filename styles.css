@@ -16,6 +16,7 @@ html, body {
     align-content: center;
 }
 .app-updates {
+    width:100%;
     /* background: pink; */
 }
 h1, h2, h4, h5  {
@@ -37,6 +38,7 @@ h3{
 }
 ul {
     list-style: none;
+    width:100%;
 }
 li {
     width: 100%;
@@ -65,7 +67,6 @@ li {
     align-items: center;
     align-content: center;
     justify-content: center;
-
 }
 
 textarea {

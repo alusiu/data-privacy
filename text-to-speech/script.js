@@ -23,6 +23,25 @@ renderNotes(notes);
 
 var wordCloudVal = '';
  
+// table content stuff 
+var date = new Date();
+
+var time = new Date(date),
+h = time.getHours(), // 0-24 format
+m = time.getMinutes(),
+day = 'AM';
+
+if (h > 12) {
+  h = h - 12;
+  day = 'PM';
+}
+
+var dateString = date.toString();
+var d = dateString.substr(0,  dateString.indexOf('8')+1); 
+
+
+
+// PubNub stuff 
 var dataServer;
 var pubKey = 'pub-c-eb3b3d9b-4ee9-4557-9a4e-5d00ae3018d0';
 var subKey = 'sub-c-dd3d295e-f6a4-11e8-babf-1e3d8cb2a384';
@@ -37,6 +56,13 @@ var channelName = "sayStuff";
       subscribe_key : subKey,  
       ssl: true  //enables a secure connection. This option has to be used if using the OCAD webspace
     });
+
+/*-----Fill in the gaps in the info-----*/
+
+$('#date').append(' '+ d);
+$('#start').append(' '+ h+':'+m+' ' + day);
+
+$('#counter').stopwatch().stopwatch('start');
 
 /*-----------------------------
       Voice Recognition 
@@ -144,7 +170,6 @@ $('#save-note-btn').on('click', function(e) {
       
 })
 
-
 notesList.on('click', function(e) {
   e.preventDefault();
   var target = $(e.target);
@@ -162,7 +187,6 @@ notesList.on('click', function(e) {
     target.closest('.note').remove();
   }
 });
-
 
 /*-----------------------------
       Speech Synthesis 
