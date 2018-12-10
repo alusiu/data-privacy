@@ -59,10 +59,11 @@ var channelName = "sayStuff";
     dataServer.history(
       {
           channel: 'sayStuff',
-          count: 100, // how many items to fetch
+          count: 10000, // how many items to fetch
           stringifiedTimeToken: true, // false is the default
       },
       function (status, response) {
+  
           var msgs = response.messages;
           var start = response.startTimeToken;
           var end = response.endTimeToken;
@@ -71,13 +72,14 @@ var channelName = "sayStuff";
               console.log(msgs.length);
               console.log("start : " + start);
               console.log("end : " + end);
-          }
+          
           for (var i = 0; i < msgs.length; i++) {
             if (msgs[i].entry.messageText != undefined) {
               overAllNotes += ' '+ msgs[i].entry.messageText;
             }
           }
           wordFrequency(overAllNotes);
+        }
           // renderCloud(overAllNotes);
 
       }
@@ -133,9 +135,14 @@ recognition.onresult = function(event) {
 };
 
 recognition.onstart = function() { 
+  console.log("starting");
   // instructions.text('Voice recognition activated. Try speaking into the microphone.');
 }
+recognition.onend = function() {
+  console.log('on end');
+  recognition.start();
 
+}
 recognition.onspeechend = function() {
   console.log('You were quiet for a while so voice recognition turned itself off.');
 }
@@ -204,7 +211,7 @@ function sendTheMessage(sendText) {
       Helper Functions 
 ------------------------------*/
 
-function renderNotes(notes) {
+/*function renderNotes(notes) {
   var html = '';
   if(notes.length) {
     notes.forEach(function(note) {
@@ -222,7 +229,7 @@ function renderNotes(notes) {
     html = '<li><p class="content">You don\'t have any notes yet.</p></li>';
   }
   notesList.html(html);
-}
+}*/
 
 
 function saveNote(dateTime, content) {
